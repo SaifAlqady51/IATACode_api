@@ -29,7 +29,7 @@ export async function run() {
   } 
 }
 
-export async function close(){
+export async function disconnect(){
 	try{
 		await client.close()
 		console.log('close mongodb connection')

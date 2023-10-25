@@ -1,11 +1,9 @@
-import { client } from "../database/mongodb_connect";
+import { client, run, disconnect } from "../database/mongodb_connect";
 
 export async function getCityData(cityName: any) {
   try {
-    await client.connect();
-    await client.db("admin").command({ ping: 1 });
-
-    console.log("connected");
+	// start mongodb connection
+	await run()
 
 	const cityData = await client
       .db("test")
@@ -14,12 +12,12 @@ export async function getCityData(cityName: any) {
     if (cityData == null) {
       return { message: `${cityName} not found` };
     } else {
-		return {cityName: cityData.cityName, IATA: cityData.IATA};
+		return {cityName: cityData.name, IATA: cityData.IATA};
     }
   } catch (error) {
     console.error(error);
   } finally {
-    await client.close();
-    console.log("disconnected");
+	// end mongodb connectiong
+	await disconnect()
   }
 }
