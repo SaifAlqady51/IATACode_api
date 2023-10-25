@@ -13,7 +13,7 @@ app.get("/", (_req: Request, res: Response) => {
 	res.json({message:"hello world"});
 });
 
-
+// get city IATA code from database
 app.get("/get", async (req:Request, res: Response) => {
 	const {cityName}  = req.query;
 	console.log(cityName)
