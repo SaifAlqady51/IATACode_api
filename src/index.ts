@@ -1,13 +1,51 @@
 import express, { Request, Response, Application } from "express";
-import { run } from "./database/mongodb_connect";
+import helmet from 'helmet';
+import { citiesList } from "./TopThousandCity";
+import {getCityData} from "./utils/getCityData";
+import getIATACityCode from "./utils/getIATACityCode";
+import { insertCity } from "./utils/insertCity";
+
+const listOfCities = citiesList.slice(900, 1000);
 const app: Application = express();
+app.use(helmet())
 
-run()
-  .then(() => console.log("connected to monogdb"))
-  .catch((error) => console.log(error));
+app.get("/", (_req: Request, res: Response) => {
+	res.json({message:"hello world"});
+});
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("hello world");
+
+app.get("/get", async (req:Request, res: Response) => {
+	const {cityName}  = req.query;
+	console.log(cityName)
+	if(cityName){
+		const city = await getCityData(cityName)	
+		res.json(city)
+	}
+	else{
+		res.json({message: 'make sure that your url is in the form of get/?cityName={cityname}'})
+	}
+	
+})
+
+app.post("/upload", async (_req: Request, _res: Response) => {
+  for (let cityName of listOfCities) {
+    const cityCode = await getIATACityCode(cityName);
+    if (cityCode) {
+      await insertCity(cityName, cityCode);
+      console.log(`city ${cityName} inserted into database`);
+    } else {
+      console.log(`city code for ${cityName} not available`);
+    }
+  }
+});
+app.post("/upload/single", async (req: Request, res: Response) => {
+  const { cityName, cityCode } = req.query;
+  if (cityName && cityCode) {
+	await insertCity(cityName, cityCode)
+  }
+  else{
+	res.send('make sure that the url in this form => /upload/single/?cityName={}&cityCode={}')
+  }
 });
 
 let port: number = 5555;
