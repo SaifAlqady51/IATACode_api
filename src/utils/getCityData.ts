@@ -1,5 +1,4 @@
 import { client } from "../database/mongodb_connect";
-import { CityData } from "../types/CityData-type";
 
 export async function getCityData(cityName: any) {
   try {
