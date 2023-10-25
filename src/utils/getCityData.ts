@@ -3,20 +3,23 @@ import { client } from "../database/mongodb_connect";
 export async function getCityData(cityName: any) {
   try {
     await client.connect();
-	await client.db("admin").command({ ping: 1 });
+    await client.db("admin").command({ ping: 1 });
 
-	console.log('connected')
+    console.log("connected");
 
-    const cityData = await client.db("test").collection("citycodes").findOne({ name: cityName });
-	if(cityData == null){
-		return cityData
-	}else{
-		return {message: `${cityName} not found`}	
-	}
+    const cityData = await client
+      .db("test")
+      .collection("citycodes")
+      .findOne({ name: cityName });
+    if (cityData == null) {
+      return { message: `${cityName} not found` };
+    } else {
+      return cityData;
+    }
   } catch (error) {
     console.error(error);
   } finally {
     await client.close();
-	console.log('disconnected')
+    console.log("disconnected");
   }
 }

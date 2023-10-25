@@ -16,7 +16,6 @@ app.get("/", (_req: Request, res: Response) => {
 // get city IATA code from database
 app.get("/get", async (req:Request, res: Response) => {
 	const {cityName}  = req.query;
-	console.log(cityName)
 	if(cityName){
 		const city = await getCityData(cityName)	
 		res.json(city)
