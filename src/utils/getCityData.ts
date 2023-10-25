@@ -1,23 +1,23 @@
-import { client, run, disconnect } from "../database/mongodb_connect";
+import { client, run, disconnect } from '../database/mongodb_connect';
 
 export async function getCityData(cityName: any) {
-  try {
-	// start mongodb connection
-	await run()
+    try {
+        // start mongodb connection
+        await run();
 
-	const cityData = await client
-      .db("test")
-      .collection("citycodes")
-      .findOne({ name: cityName });
-    if (cityData == null) {
-      return { message: `${cityName} not found` };
-    } else {
-		return {cityName: cityData.name, IATA: cityData.IATA};
+        const cityData = await client
+            .db('test')
+            .collection('citycodes')
+            .findOne({ name: cityName });
+        if (cityData == null) {
+            return { message: `${cityName} not found` };
+        } else {
+            return { cityName: cityData.name, IATA: cityData.IATA };
+        }
+    } catch (error) {
+        console.error(error);
+    } finally {
+        // end mongodb connectiong
+        await disconnect();
     }
-  } catch (error) {
-    console.error(error);
-  } finally {
-	// end mongodb connectiong
-	await disconnect()
-  }
 }

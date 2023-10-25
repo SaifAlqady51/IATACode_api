@@ -998,4 +998,4 @@ export const citiesList = [
     'Zhoushan',
     'Tiruppūr',
     'Natal',
-]
+];
