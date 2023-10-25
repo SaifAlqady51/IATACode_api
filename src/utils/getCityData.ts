@@ -1,4 +1,5 @@
 import { client } from "../database/mongodb_connect";
+import { CityData } from "../types/CityData-type";
 
 export async function getCityData(cityName: any) {
   try {
@@ -7,14 +8,14 @@ export async function getCityData(cityName: any) {
 
     console.log("connected");
 
-    const cityData = await client
+	const cityData = await client
       .db("test")
       .collection("citycodes")
       .findOne({ name: cityName });
     if (cityData == null) {
       return { message: `${cityName} not found` };
     } else {
-      return cityData;
+		return {cityName: cityData.cityName, IATA: cityData.IATA};
     }
   } catch (error) {
     console.error(error);

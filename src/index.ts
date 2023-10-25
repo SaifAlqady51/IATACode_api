@@ -18,7 +18,9 @@ app.get("/get", async (req:Request, res: Response) => {
 	const {cityName}  = req.query;
 	if(cityName){
 		const city = await getCityData(cityName)	
-		res.json(city)
+		if(city){
+			res.json(city)
+		}
 	}
 	else{
 		res.json({message: 'make sure that your url is in the form of get/?cityName={cityname}'})
