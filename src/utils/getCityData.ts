@@ -22,7 +22,7 @@ export async function getCityIATACode(cityName: any) {
     }
 }
 
-export async function getCityName(IATACode: any) {
+export async function getCityName(cityCode: any) {
     try {
         // start mongodb connection
         await run();
@@ -30,9 +30,9 @@ export async function getCityName(IATACode: any) {
         const cityData = await client
             .db('test')
             .collection('citycodes')
-            .findOne({ IATA: IATACode });
+            .findOne({ IATA: cityCode });
         if (cityData == null) {
-            return { message: `${IATACode} not found` };
+            return { message: `${cityCode} not found` };
         } else {
             return { cityName: cityData.name, IATA: cityData.IATA };
         }

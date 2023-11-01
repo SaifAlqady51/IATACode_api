@@ -8,7 +8,8 @@ export async function insertCity(cityName: any, cityCode: any) {
         await client
             .db('test')
             .collection('citycodes')
-            .insertOne({ name: cityName, IATA: cityCode });
+			.insertOne({ name: cityName, IATA: cityCode });
+		return {message:`City ${cityName} inserted into the database successfully`}
     } catch (error) {
         console.error(`Inserting Error : ${error}`);
     } finally {

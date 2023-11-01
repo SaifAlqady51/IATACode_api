@@ -3,6 +3,8 @@ import helmet from 'helmet';
 import { getCityIATACode, getCityName } from './utils/getCityData';
 import { insertCity } from './utils/insertCity';
 import cors from 'cors';
+import dotenv from 'dotenv'
+dotenv.config()
 
 const app: Application = express();
 app.use(helmet());
@@ -15,10 +17,10 @@ app.get('/', (_req: Request, res: Response) => {
 
 // get city IATA code from database
 app.get('/get', async (req: Request, res: Response) => {
-    const { cityName, IATACode } = req.query;
-    if (IATACode) {
-        const cityData = await getCityName(IATACode);
-        if (IATACode) {
+    const { cityName, cityCode } = req.query;
+    if (cityCode) {
+        const cityData = await getCityName(cityCode);
+        if (cityData) {
             res.json(cityData);
         }
     }
@@ -27,24 +29,26 @@ app.get('/get', async (req: Request, res: Response) => {
         if (cityData) {
             res.json(cityData);
         }
-    } else if(!IATACode && !cityName) {
+    } else if (!cityCode && !cityName) {
         res.json({
             message:
                 'make sure that your url is in the form of get/?cityName={cityname} or get/?IATACode={IATA}',
         });
     }
-	res.end()
+    res.end();
 });
 
-app.post('/upload/single', async (req: Request, res: Response) => {
+app.post('/upload', async (req: Request, res: Response) => {
     const { cityName, cityCode, api_key } = req.query;
-    if (api_key !== process.env.API_KEY) {
+	console.log(process.env.API_KEY)
+    if (api_key === process.env.API_KEY) {
         if (cityName && cityCode) {
-            await insertCity(cityName, cityCode);
+			const insertedCity = await insertCity(cityName, cityCode);
+			res.json(insertedCity)
         } else {
             res.json({
                 message:
-                    'make sure that the url in this form => /upload/single/?cityName={}&cityCode={}',
+                    'make sure that the url in this form => /upload/single/?cityName={}&cityCode={}'
             });
         }
     } else {
