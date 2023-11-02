@@ -4,4 +4,4 @@ this api takes city name that containing airport and returns the IATA code for i
 
 # how to use
 
-go to `[https://iata-code-api.vercel.app](https://iata-code-api.vercel.app/)`
+go to `[https://iata-code-api.vercel.app](https://iata-code-api.vercel.app)`
