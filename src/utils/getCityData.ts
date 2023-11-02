@@ -2,7 +2,7 @@ import { client, run, disconnect } from '../database/mongodb_connect';
 
 export async function getCityIATACode(cityName: any) {
     try {
-        // start mongodb connection
+  // start mongodb connection
         await run();
 
         const cityData = await client
