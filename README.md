@@ -22,3 +22,10 @@ To get IATA code from city Name type path:
 Example: 
 [https://iata-code-api.vercel.app/get?cityCode=CAI](https://iata-code-api.vercel.app/get?cityCode={CAI})
 
+### Adding data to database
+
+To add data to database you have to type path in `POST` method: 
+
+[https://iata-code-api.vercel.app/upload?cityName={cityName}&cityCode={cityCode}&api_key={api_key}](https://iata-code-api.vercel.app)
+
+Unfortunately, you cannot add data without api_key 
