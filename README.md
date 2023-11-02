@@ -26,6 +26,6 @@ Example:
 
 To add data to database you have to type path in `POST` method: 
 
-[https://iata-code-api.vercel.app/upload?cityName={cityName}&cityCode={cityCode}&api_key={api_key}](https://iata-code-api.vercel.app)
+[https://iata-code-api.vercel.app/upload?cityName={cityName}&cityCode={cityCode}&api_key={api_key}](https://iata-code-api.vercel.app/upload?cityname={cityname}&cityCode={cityCode}&api_key={api_key})
 
 Unfortunately, you cannot add data without api_key 
