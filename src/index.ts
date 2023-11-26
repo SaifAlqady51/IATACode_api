@@ -32,7 +32,7 @@ app.get('/get', async (req: Request, res: Response) => {
     } else if (!cityCode && !cityName) {
         res.json({
             message:
-                'make sure that your url is in the form of get/?cityName={cityname} or get/?IATACode={IATA}',
+                'make sure that your url is in the form of get/?cityName={cityname} or get/?cityCode={IATA}',
         });
     }
     res.end();
